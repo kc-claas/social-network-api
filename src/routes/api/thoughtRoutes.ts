@@ -1,13 +1,14 @@
 import { Router } from "express";
+import { addReaction, createThought, deleteThought, getAllThoughts, getSingleThought, removeReaction, updateThought } from "../../controllers/thoughtController.js";
 
 const router = Router()
 
 // route is /api/thoughts/
 
-router.route('/').get().post()
+router.route('/').get(getAllThoughts).post(createThought)
 
-router.route('/:thoughtId').get().put().delete()
+router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought)
 
-router.route('/:thoughtId/reactions').post().delete()
+router.route('/:thoughtId/reactions').post(addReaction).delete(removeReaction)
 
 export default router
