@@ -69,10 +69,14 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const addFriend = async (req: Request, res: Response) => {
     try {
+        if (req.params.userId === req.params.friendId) { res.json({message: "cannot add yourself as a friend!"})}
+        else {
         const user = await User.findOneAndUpdate({_id: req.params.userId}, {$addToSet: {friends: req.params.friendId}}, { runValidators: true, new: true })
+
         if (!user) {res.status(400).json({message: "User not found"})}
 
         res.json(user)
+        }
     } catch (error) {
         res.status(500).json(error)
     }
